@@ -63,7 +63,7 @@ class _AnimatedRectangleState extends State<AnimatedRectangle>
   Widget build(BuildContext context) {
     controller.forward();
 
-    print('rotation.value ${rotation.value}');
+    // print('rotation.value ${rotation.value}');
     return AnimatedBuilder(
       animation: controller,
       builder: (context, child) {

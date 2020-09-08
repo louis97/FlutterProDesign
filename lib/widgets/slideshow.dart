@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:professionalDesignsFlutter/theme/theme.dart';
 import 'package:provider/provider.dart';
 
 class Slideshow extends StatelessWidget {
@@ -24,10 +25,14 @@ class Slideshow extends StatelessWidget {
         child: Center(
           child: Builder(
             builder: (BuildContext context) {
-              Provider.of<_SlideshowModel>(context).primaryColor=this.primaryColor;
-              Provider.of<_SlideshowModel>(context).secondaryColor=this.secondaryColor;
-              Provider.of<_SlideshowModel>(context).primaryBullet=this.primaryBullet;
-              Provider.of<_SlideshowModel>(context).secondaryBullet=this.secondaryBullet;
+              Provider.of<_SlideshowModel>(context).primaryColor =
+                  this.primaryColor;
+              Provider.of<_SlideshowModel>(context).secondaryColor =
+                  this.secondaryColor;
+              Provider.of<_SlideshowModel>(context).primaryBullet =
+                  this.primaryBullet;
+              Provider.of<_SlideshowModel>(context).secondaryBullet =
+                  this.secondaryBullet;
               return Column(
                 children: <Widget>[
                   dotsUp ? _Dots(this.slides.length) : SizedBox.shrink(),
@@ -134,6 +139,7 @@ class _Dot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeChanger themeChanger = Provider.of<ThemeChanger>(context);
     final pageViewProvider = Provider.of<_SlideshowModel>(context);
     final pageViewIndex = pageViewProvider.currentPage;
     double tamanio;
@@ -142,7 +148,9 @@ class _Dot extends StatelessWidget {
         pageViewIndex >= index - 0.5 &&
         pageViewIndex < index + 0.5) {
       tamanio = pageViewProvider.primaryBullet;
-      color = pageViewProvider.primaryColor;
+      color = (themeChanger.darkTheme)
+          ? themeChanger.currentTheme.accentColor
+          : pageViewProvider.primaryColor;
     } else {
       tamanio = pageViewProvider.secondaryBullet;
       color = pageViewProvider.secondaryColor;

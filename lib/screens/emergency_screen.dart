@@ -16,6 +16,7 @@ class _ItemBoton {
 class EmergencyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    bool isLarge = (MediaQuery.of(context).size.height > 500) ? true : false;
     final items = <_ItemBoton>[
       _ItemBoton(FontAwesomeIcons.carCrash, 'Motor Accident', Color(0xff6989F5),
           Color(0xff906EF5)),
@@ -61,7 +62,7 @@ class EmergencyScreen extends StatelessWidget {
         body: Stack(
       children: <Widget>[
         ButtonList(fatButtons: fatButtons),
-        Header(),
+        if (isLarge) Header(),
       ],
     ));
   }
@@ -76,16 +77,20 @@ class ButtonList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isLarge = (MediaQuery.of(context).size.height > 500) ? true : false;
     return Container(
-      margin: EdgeInsets.only(top: 200),
-      child: ListView(
-        physics: BouncingScrollPhysics(),
-        children: [
-          SizedBox(
-            height: 80,
-          ),
-          ...fatButtons
-        ],
+      margin: EdgeInsets.only(top: isLarge ? 220 : 10),
+      child: SafeArea(
+        child: ListView(
+          physics: BouncingScrollPhysics(),
+          children: [
+            if (isLarge)
+              SizedBox(
+                height: 80,
+              ),
+            ...fatButtons
+          ],
+        ),
       ),
     );
   }

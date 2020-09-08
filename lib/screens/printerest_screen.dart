@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:professionalDesignsFlutter/theme/theme.dart';
 import '../widgets/printerest_menu.dart';
 import 'package:provider/provider.dart';
 
@@ -24,41 +25,51 @@ class PrinterestScreen extends StatelessWidget {
 class _PrinterestMenuPositioned extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
+    double screenWidth = MediaQuery.of(context).size.width;
+    final appTheme = Provider.of<ThemeChanger>(context).currentTheme;
+    if (screenWidth > 500) {
+      screenWidth = screenWidth - 300;
+    }
+
     return Positioned(
         bottom: 30,
         child: Container(
-            alignment: Alignment.center,
             height: 60,
             width: screenWidth,
-            child: PrinterestMenu(
-              mostrar: Provider.of<_MenuModel>(context).mostrar,
-              // activeColor: Colors.pink,
-              // inactiveColor: Colors.black38,
-              // backgroundColor: Colors.green,
-              items: [
-                PrinterestButton(
-                    icon: Icons.pie_chart,
-                    callback: () {
-                      print('pie_chart has been pressed');
-                    }),
-                PrinterestButton(
-                    icon: Icons.search,
-                    callback: () {
-                      print('search has been pressed');
-                    }),
-                PrinterestButton(
-                    icon: Icons.notifications,
-                    callback: () {
-                      print('notifications has been pressed');
-                    }),
-                PrinterestButton(
-                    icon: Icons.supervised_user_circle,
-                    callback: () {
-                      print('supervised_user_circle has been pressed');
-                    }),
-              ],
-            )));
+            child: Row(children: [
+              Spacer(),
+              PrinterestMenu(
+                backgroundColor: appTheme.scaffoldBackgroundColor,
+                activeColor: appTheme.accentColor,
+                mostrar: Provider.of<_MenuModel>(context).mostrar,
+                // activeColor: Colors.pink,
+                // inactiveColor: Colors.black38,
+                // backgroundColor: Colors.green,
+                items: [
+                  PrinterestButton(
+                      icon: Icons.pie_chart,
+                      callback: () {
+                        print('pie_chart has been pressed');
+                      }),
+                  PrinterestButton(
+                      icon: Icons.search,
+                      callback: () {
+                        print('search has been pressed');
+                      }),
+                  PrinterestButton(
+                      icon: Icons.notifications,
+                      callback: () {
+                        print('notifications has been pressed');
+                      }),
+                  PrinterestButton(
+                      icon: Icons.supervised_user_circle,
+                      callback: () {
+                        print('supervised_user_circle has been pressed');
+                      }),
+                ],
+              ),
+              Spacer(),
+            ])));
   }
 }
 
@@ -95,13 +106,15 @@ class _PrinterestGridState extends State<PrinterestGrid> {
 
   @override
   Widget build(BuildContext context) {
+    int count = (MediaQuery.of(context).size.width > 500) ? 3 : 2;
+
     return StaggeredGridView.countBuilder(
       controller: scrollController,
-      crossAxisCount: 4,
+      crossAxisCount: count,
       itemCount: items.length,
       itemBuilder: (BuildContext context, int index) => PrinterestItem(index),
       staggeredTileBuilder: (int index) =>
-          StaggeredTile.count(2, index.isEven ? 2 : 3),
+          StaggeredTile.count(1, index.isEven ? 1 : 2),
       mainAxisSpacing: 4.0,
       crossAxisSpacing: 4.0,
     );
@@ -111,7 +124,6 @@ class _PrinterestGridState extends State<PrinterestGrid> {
 class PrinterestItem extends StatelessWidget {
   final int index;
   PrinterestItem(this.index);
-
   @override
   Widget build(BuildContext context) {
     return Container(

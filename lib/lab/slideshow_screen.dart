@@ -33,7 +33,7 @@ class __SlidesState extends State<_Slides> {
   void initState() {
     super.initState();
     pageController.addListener(() {
-      print(pageController.page);
+      // print(pageController.page);
       Provider.of<SliderModel>(context, listen: false).currentPage =
           pageController.page;
     });
